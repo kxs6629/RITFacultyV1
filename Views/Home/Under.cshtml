@@ -1,0 +1,22 @@
+﻿@model RITFacultyV1.ViewModels.UndergradViewModel
+
+<h2>@Model.Title</h2>
+
+<div class="col-sm-12 col-lg-12 col-md-12">
+	@foreach (var under in Model.UnderGrads)
+	{
+		<h3 style="font-size:medium; font-weight:bold">
+			@under.degreeName
+		</h3>
+		<h3 style="font-size:medium; font-weight:bold">
+			@under.title
+		</h3>
+		@foreach (var conc in under.concentrations)
+		{
+			<ul>
+				<li>@conc</li>
+			</ul>
+		}
+		<br />
+	}
+</div>
