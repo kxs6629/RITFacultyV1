@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 
 namespace RITFacultyV1.Services
 {
-    public class GetUnderGraduate
+    public class GetCoop
     {
-        public async Task<List<UnderGradMajors>> GetAllUnderGrads()
+        public async Task<List<CoopInformation>> getAllCoops() 
         {
             using (var client = new HttpClient())
             {
@@ -21,37 +21,28 @@ namespace RITFacultyV1.Services
 
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("api/degrees/undergraduate", HttpCompletionOption.ResponseHeadersRead);
+                    HttpResponseMessage response = await client.GetAsync("api/employment/coopTable", HttpCompletionOption.ResponseHeadersRead);
                     response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
 
-                    var rtnResults = JsonConvert.DeserializeObject<Dictionary<string, List<UnderGradMajors>>>(data);
+                    var rtnResults = JsonConvert.DeserializeObject<Coop>(data);
 
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    //UnderGradMajors underGrad = new UnderGradMajors();
+                    List<CoopInformation> coopList = rtnResults.coopTable.coopInformation;
 
-                    foreach (KeyValuePair<string, List<UnderGradMajors>> kvp in rtnResults)
-                    {
-                        foreach (var item in kvp.Value)
-                        {
-                            underGradList.Add(item);
-                        }
-                    }
-
-                    return underGradList;
+                    return coopList;
                 }
                 catch (HttpRequestException hre)
                 {
                     var msg = hre.Message;
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    return underGradList;
+                    List<CoopInformation> coopList = new List<CoopInformation>();
+                    return coopList;
                     //return "HttpRequestException";
                 }
                 catch (Exception ex)
                 {
                     var msg = ex.Message;
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    return underGradList;
+                    List<CoopInformation> coopList = new List<CoopInformation>();
+                    return coopList;
                     //return "Exception"; 
                 }
             }

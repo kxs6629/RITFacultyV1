@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 
 namespace RITFacultyV1.Services
 {
-    public class GetUnderGraduate
+    public class GetAbout
     {
-        public async Task<List<UnderGradMajors>> GetAllUnderGrads()
+        public async Task<About> GetAboutInfo()
         {
             using (var client = new HttpClient())
             {
@@ -21,40 +21,32 @@ namespace RITFacultyV1.Services
 
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("api/degrees/undergraduate", HttpCompletionOption.ResponseHeadersRead);
+                    HttpResponseMessage response = await client.GetAsync("api/about", HttpCompletionOption.ResponseHeadersRead);
                     response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
 
-                    var rtnResults = JsonConvert.DeserializeObject<Dictionary<string, List<UnderGradMajors>>>(data);
+                    var rtnResults = JsonConvert.DeserializeObject<About>(data);
 
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    //UnderGradMajors underGrad = new UnderGradMajors();
-
-                    foreach (KeyValuePair<string, List<UnderGradMajors>> kvp in rtnResults)
-                    {
-                        foreach (var item in kvp.Value)
-                        {
-                            underGradList.Add(item);
-                        }
-                    }
-
-                    return underGradList;
+                    About about = rtnResults;
+            
+                    return about;
                 }
                 catch (HttpRequestException hre)
                 {
                     var msg = hre.Message;
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    return underGradList;
+                    About about = new About();
+                    return about;
                     //return "HttpRequestException";
                 }
                 catch (Exception ex)
                 {
                     var msg = ex.Message;
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    return underGradList;
+                    About about= new About();
+                    return about;
                     //return "Exception"; 
                 }
             }
         }
+
     }
 }

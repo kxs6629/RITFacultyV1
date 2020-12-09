@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 
 namespace RITFacultyV1.Services
 {
-    public class GetUnderGraduate
+    public class GetStaff
     {
-        public async Task<List<UnderGradMajors>> GetAllUnderGrads()
+        public async Task<List<Staff>> getAllStaff()
         {
             using (var client = new HttpClient())
             {
@@ -21,38 +21,37 @@ namespace RITFacultyV1.Services
 
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("api/degrees/undergraduate", HttpCompletionOption.ResponseHeadersRead);
+                    HttpResponseMessage response = await client.GetAsync("api/people/staff", HttpCompletionOption.ResponseHeadersRead);
                     response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
 
-                    var rtnResults = JsonConvert.DeserializeObject<Dictionary<string, List<UnderGradMajors>>>(data);
+                    var rtnResults = JsonConvert.DeserializeObject<Dictionary<string, List<Staff>>>(data);
 
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    //UnderGradMajors underGrad = new UnderGradMajors();
+                    List<Staff> staffList = new List<Staff>();
 
-                    foreach (KeyValuePair<string, List<UnderGradMajors>> kvp in rtnResults)
+                    foreach (KeyValuePair<string, List<Staff>> kvp in rtnResults)
                     {
                         foreach (var item in kvp.Value)
                         {
-                            underGradList.Add(item);
+                            staffList.Add(item);
                         }
                     }
 
-                    return underGradList;
+                    return staffList;
                 }
                 catch (HttpRequestException hre)
                 {
                     var msg = hre.Message;
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    return underGradList;
+                    List<Staff> staffList = new List<Staff>();
+                    return staffList;
                     //return "HttpRequestException";
                 }
                 catch (Exception ex)
                 {
                     var msg = ex.Message;
-                    List<UnderGradMajors> underGradList = new List<UnderGradMajors>();
-                    return underGradList;
-                    //return "Exception"; 
+                    List<Staff> staffList = new List<Staff>();
+                    return staffList;
+                    //return "Exception"; ;
                 }
             }
         }

@@ -1,0 +1,32 @@
+﻿@model RITFacultyV1.ViewModels.CoopViewModel
+
+<h2>@Model.Title</h2>
+<table id="coop_table" class = "display">
+	<thead>
+		<tr>
+			<th scope="col">Employer</th>
+			<th scope="col">Degree</th>
+			<th scope="col">City</th>
+			<th scope="col">Term</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var coop in Model.coopInformation)
+		{
+			<tr>
+				<th scope="row">@coop.employer</th>
+				<td>@coop.degree</td>
+				<td>@coop.city</td>
+				<td>@coop.term</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@section Scripts
+{
+	<script src= "~/js/datatables.js"></script>
+	<script>
+		$("#coop_table").DataTable();
+	</script>
+}

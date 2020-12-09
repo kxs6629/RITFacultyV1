@@ -1,0 +1,26 @@
+﻿@model RITFacultyV1.ViewModels.StaffViewModel
+
+<h2>@Model.Title</h2>
+
+@foreach (var staff in Model.Staff)
+{
+    <div class="col-sm-3 col-lg-3 col-md-3">
+        <div class="thumbnail">
+            <img src="@staff.imagePath" alt="" />
+            <div class="caption">
+                <h3 style="font-size:small">
+                    @staff.name
+                </h3>
+                <h3 style="font-size:small">
+                    @staff.title
+                </h3>
+                <h3 style="font-size:small">
+                    @staff.website
+                </h3>
+                <h3 style="font-size:small">
+                    @staff.email
+                </h3>
+            </div>
+        </div>
+    </div>
+}

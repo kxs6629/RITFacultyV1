@@ -1,0 +1,39 @@
+﻿@model RITFacultyV1.ViewModels.GradViewModel
+
+<h2>@Model.Title</h2>
+
+<div class="col-sm-12 col-lg-12 col-md-12">
+	@foreach (var grad in Model.Grad)
+	{
+		@if(grad.title != null)
+		{
+			<h3 style="font-size:medium; font-weight:bold">
+				@grad.degreeName
+			</h3>
+			<h3 style="font-size:medium; font-weight:bold">
+				@grad.title
+			</h3>
+			@foreach (var conc in grad.concentrations)
+			{
+				<ul>
+					<li>@conc</li>
+				</ul>
+			}
+			<br />
+		}
+		else
+		{
+			<h3 style="font-size:medium; font-weight:bold">
+				@grad.degreeName
+			</h3>
+			@foreach (var conc in grad.availableCertificates)
+			{
+				<ul>
+					<li>@conc</li>
+				</ul>
+			}
+			<br />
+		}
+		
+	}
+</div>
