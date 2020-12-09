@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace RITFacultyV1.Models
 {
+    // Represents the faculty data as presented by the API
     public class Faculty
     {
         public string username { get; set; }

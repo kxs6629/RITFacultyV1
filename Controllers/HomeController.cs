@@ -56,7 +56,6 @@ namespace RITFacultyV1.Controllers
          */
         public async Task<IActionResult> Grad()
         {
-            //Graduate code will go here
             var getGrad = new GetGraduate();
             var grad = await getGrad.GetAllGrads();
             var gradViewModel = new GradViewModel()
@@ -89,7 +88,6 @@ namespace RITFacultyV1.Controllers
          */
         public async Task<IActionResult> Coop()
         {
-            //Coop code will go here
             var getCoop = new GetCoop();
             var coop = await getCoop.getAllCoops();
             var coopViewModel = new CoopViewModel()
@@ -107,7 +105,6 @@ namespace RITFacultyV1.Controllers
          */
         public async Task<IActionResult> Employee()
         {
-            //Graduate code will go here
             var getEmp = new GetEmployee();
             var emp = await getEmp.getAllEmps();
             var empViewModel = new EmployeeViewModel()

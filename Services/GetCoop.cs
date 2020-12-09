@@ -9,8 +9,10 @@ using Newtonsoft.Json;
 
 namespace RITFacultyV1.Services
 {
+    // Service used to retrieve information from the employment/coopTable node
     public class GetCoop
     {
+        // Asynchronous call to the APi that returns data representing a list of the CoopInformation model
         public async Task<List<CoopInformation>> getAllCoops() 
         {
             using (var client = new HttpClient())
@@ -21,12 +23,15 @@ namespace RITFacultyV1.Services
 
                 try
                 {
+                    // Wait for response from the server, then read data as a string
                     HttpResponseMessage response = await client.GetAsync("api/employment/coopTable", HttpCompletionOption.ResponseHeadersRead);
                     response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
 
+                    // Convert data read in as a Coop Model
                     var rtnResults = JsonConvert.DeserializeObject<Coop>(data);
 
+                    //Retrieve the coopInformation model from this newly converted data, then return it
                     List<CoopInformation> coopList = rtnResults.coopTable.coopInformation;
 
                     return coopList;

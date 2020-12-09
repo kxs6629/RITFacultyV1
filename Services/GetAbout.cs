@@ -9,8 +9,10 @@ using Newtonsoft.Json;
 
 namespace RITFacultyV1.Services
 {
+    // Service used to retrieve information from the about node
     public class GetAbout
     {
+        // Asynchronous call to the APi that returns data representing the About model
         public async Task<About> GetAboutInfo()
         {
             using (var client = new HttpClient())
@@ -21,12 +23,15 @@ namespace RITFacultyV1.Services
 
                 try
                 {
+                    // Wait for response from the server, then read data as a string
                     HttpResponseMessage response = await client.GetAsync("api/about", HttpCompletionOption.ResponseHeadersRead);
                     response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
 
+                    // Convert the data into an About object
                     var rtnResults = JsonConvert.DeserializeObject<About>(data);
-
+                    
+                    // About object to return
                     About about = rtnResults;
             
                     return about;

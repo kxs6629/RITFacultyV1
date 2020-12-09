@@ -9,8 +9,11 @@ using Newtonsoft.Json;
 
 namespace RITFacultyV1.Services
 {
+    // Service used to retrieve information from the faculty node
     public class GetFaculty
     {
+
+        // Asynchronous call to the APi that returns data representing a list of the Faculty model
         public async Task<List<Faculty>> GetAllFaculty()
         {
             using (var client = new HttpClient())
@@ -21,12 +24,15 @@ namespace RITFacultyV1.Services
 
                 try
                 {
+                    // Wait for response, then read in data as a string
                     HttpResponseMessage response = await client.GetAsync("api/people/faculty", HttpCompletionOption.ResponseHeadersRead);
                     response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
 
+                    // Process the data as a list of Faculty models
                     var rtnResults = JsonConvert.DeserializeObject<Dictionary<string, List<Faculty>>>(data);
 
+                    // Create a list of faculty models from the newly created model, then return it
                     List<Faculty> facultyList = new List<Faculty>();
               
                     foreach (KeyValuePair<string, List<Faculty>> kvp in rtnResults)

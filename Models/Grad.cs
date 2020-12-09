@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace RITFacultyV1.Models
 {
+    // Represents graduate objects as given by the API
     public class Grad
     {
         public string degreeName { get; set; }

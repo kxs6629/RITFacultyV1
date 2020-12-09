@@ -9,8 +9,10 @@ using Newtonsoft.Json;
 
 namespace RITFacultyV1.Services
 {
+    // Service used to retrieve information from the staff node
     public class GetStaff
     {
+        // Asynchronous call to the APi that returns data representing a list of the Staff model
         public async Task<List<Staff>> getAllStaff()
         {
             using (var client = new HttpClient())
@@ -21,14 +23,18 @@ namespace RITFacultyV1.Services
 
                 try
                 {
+                    // Wait for reponse, then read in data as a string
                     HttpResponseMessage response = await client.GetAsync("api/people/staff", HttpCompletionOption.ResponseHeadersRead);
                     response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
 
+                    // Process read in data as a list of Staff models
                     var rtnResults = JsonConvert.DeserializeObject<Dictionary<string, List<Staff>>>(data);
 
+                    // Create list of Staff models to be populated
                     List<Staff> staffList = new List<Staff>();
 
+                    // Populate newly created staffList, then return it
                     foreach (KeyValuePair<string, List<Staff>> kvp in rtnResults)
                     {
                         foreach (var item in kvp.Value)

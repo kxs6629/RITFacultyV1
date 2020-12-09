@@ -9,8 +9,10 @@ using Newtonsoft.Json;
 
 namespace RITFacultyV1.Services
 {
+    // Service used to retrieve information from the employment/employmentTable node
     public class GetEmployee
     {
+        // Asynchronous call to the APi that returns data representing a list of the ProfessionalEmploymentInformation model
         public async Task<List<ProfessionalEmploymentInformation>> getAllEmps()
         {
             using (var client = new HttpClient())
@@ -21,12 +23,15 @@ namespace RITFacultyV1.Services
 
                 try
                 {
+                    // Wait for response from server, then process data as a string
                     HttpResponseMessage response = await client.GetAsync("api/employment/employmentTable", HttpCompletionOption.ResponseHeadersRead);
                     response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
 
+                    // Convert the processed data as an Employee data model
                     var rtnResults = JsonConvert.DeserializeObject<Employee>(data);
 
+                    //Retrieve the ProfessionalEmploymentInformation model from the newly created Employee data, then return it
                     List<ProfessionalEmploymentInformation> empList = rtnResults.employmentTable.professionalEmploymentInformation;
 
                     return empList;
