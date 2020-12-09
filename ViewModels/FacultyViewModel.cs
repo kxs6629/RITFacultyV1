@@ -3,10 +3,9 @@ using RITFacultyV1.Models;
 
 namespace RITFacultyV1.ViewModels
 {
-    // View model for the Undergrad service
-    public class UndergradViewModel
+    public class FacultyViewModel
     {
-        public List<UnderGradMajors> UnderGrads { get; set; }
+        public List<Faculty> Faculty { get; set; }
         public string Title { get; set; }
     }
 }

@@ -18,68 +18,33 @@ namespace RITFacultyV1.Controllers
          */
         public async Task<IActionResult> Index()
         {
-            // Create service object
-            var getallFaculty = new GetFaculty();
-            // Call method from service object that returns List of faculty, wait for reponse to move on
-            var allFaculty = await getallFaculty.GetAllFaculty();
-            // Sorts List from last call
-            var sortedFaculty = allFaculty.OrderBy(f => f.username);
-            // Create view model using the given list and title
-            var homeViewModel = new HomeViewModel()
-            {
-                Faculty = sortedFaculty.ToList(),
-                Title = "This is your Faculty"
-            };
-            // returns created view, this process is similar for the functions below
-            return View(homeViewModel);
-        }
-
-        /*
-         * Responsible for creating the Under page when loaded in
-         * This data includes information on undergraduate degrees that is provided by the API
-         */
-        public async Task<IActionResult> Under()
-        {
-            var getUnder = new GetUnderGraduate();
-            var under = await getUnder.GetAllUnderGrads();
-            var underViewModel = new UndergradViewModel()
-            {
-                UnderGrads = under.ToList(),
-                Title = "Undergraduate Programs"
-            };
-            return View(underViewModel);
-        }
-
-        /*
-         * Responsible for creating the Grad page when loaded in
-         * This data includes information on graduate degrees that is provided by the API
-         */
-        public async Task<IActionResult> Grad()
-        {
-            var getGrad = new GetGraduate();
-            var grad = await getGrad.GetAllGrads();
-            var gradViewModel = new GradViewModel()
-            {
-                Grad = grad.ToList(),
-                Title = "Graduate Programs"
-            };
-            return View(gradViewModel);
-        }
-
-        /*
-         * Responsible for creating the Index page when loaded in
-         * This data includes information from the about section provided by the API
-         */
-        public async Task<IActionResult> About()
-        {
             var getAbout = new GetAbout();
             var about = await getAbout.GetAboutInfo();
-            var aboutViewModel = new AboutViewModel()
+            var homeViewModel = new HomeViewModel()
             {
                 About = about,
                 Title = "About Us"
             };
-            return View(aboutViewModel);
+            return View(homeViewModel);
+        }
+
+        /*
+         * Combined the Undergrad and Graduate calls to the API to display all
+         * information onto one page
+         */
+        public async Task<IActionResult> Degree() 
+        {
+            var getUnder = new GetUnderGraduate();
+            var under = await getUnder.GetAllUnderGrads();
+            var getGrad = new GetGraduate();
+            var grad = await getGrad.GetAllGrads();
+            var degreeViewModel = new DegreeViewModel()
+            {
+                UnderGrads = under.ToList(),
+                Grad = grad.ToList(),
+                Title = "A Look At Our Programs"
+            };
+            return View(degreeViewModel);
         }
 
         /*
@@ -93,7 +58,7 @@ namespace RITFacultyV1.Controllers
             var coopViewModel = new CoopViewModel()
             {
                 coopInformation = coop,
-                Title = "Co-op Information"
+                Title = "Recent Co-op Information"
             };
             return View(coopViewModel);
   
@@ -110,10 +75,32 @@ namespace RITFacultyV1.Controllers
             var empViewModel = new EmployeeViewModel()
             {
                 employeeInformation = emp,
-                Title = "Employment Information"
+                Title = "Recent Employment Information"
             };
             return View(empViewModel);
             
+        }
+
+        /**
+         * Reponsible for creating Faculty page when loaded in
+         * This data includes information on the faculty data provided by the API
+         */
+        public async Task<IActionResult> Faculty()
+        {
+            // Create service object
+            var getallFaculty = new GetFaculty();
+            // Call method from service object that returns List of faculty, wait for reponse to move on
+            var allFaculty = await getallFaculty.GetAllFaculty();
+            // Sorts List from last call
+            var sortedFaculty = allFaculty.OrderBy(f => f.username);
+            // Create view model using the given list and title
+            var facultyViewModel = new FacultyViewModel()
+            {
+                Faculty = sortedFaculty.ToList(),
+                Title = "This is Our Faculty"
+            };
+            // returns created view, this process is similar for the functions below
+            return View(facultyViewModel);
         }
 
         /*
@@ -129,7 +116,7 @@ namespace RITFacultyV1.Controllers
 
             {
                 Staff = sortedStaff.ToList(),
-                Title = "This is your Faculty"
+                Title = "This is Our Staff"
             };
             return View(staffViewModel);
         }
